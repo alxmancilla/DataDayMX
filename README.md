@@ -15,7 +15,7 @@ $ tar -jxvf datasets2.tar.bz2
 
 
 ## Crear ambiente de MongoDB
-$ chmod -x *.sh
+$ chmod +x *.sh
 
 $ ./0_create_directory.sh 
 
