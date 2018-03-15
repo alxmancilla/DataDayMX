@@ -40,4 +40,37 @@ $ mongoimport  -c tags --drop --type csv --headerline --file ./datasets2/tags.cs
 $ mongo test
 
 
+>  db.books.findOne()
+
+{
+	"_id" : ObjectId("5aa890aa7fe2b08c22b6b246"),
+	"book_id" : 2,
+	"goodreads_book_id" : 3,
+	"best_book_id" : 3,
+	"work_id" : 4640799,
+	"books_count" : 491,
+	"isbn" : 439554934,
+	"isbn13" : 9780000000000,
+	"authors" : "J.K. Rowling, Mary GrandPr̩",
+	"original_publication_year" : 1997,
+	"original_title" : "Harry Potter and the Philosopher's Stone",
+	"title" : "Harry Potter and the Sorcerer's Stone (Harry Potter, #1)",
+	"language_code" : "eng",
+	"image_url" : "https://images.gr-assets.com/books/1474154022m/3.jpg",
+	"small_image_url" : "https://images.gr-assets.com/books/1474154022s/3.jpg"
+}
+
+>  db.books.count()
+10000
+
+>  db.books.distinct("book_id").length
+10000
+
+> db.books.distinct("authors").length
+4664
+
+
+
+
+
 
