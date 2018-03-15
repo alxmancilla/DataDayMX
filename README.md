@@ -5,26 +5,13 @@ Descargar repositorio con dataset y ejemplos de análisis de datos con MongoDB
 
 $ git clone https://github.com/alxmancilla/DataDayMX.git
 
+$ cd DataDayMX
+
 ## Descomprimir datasets
 
 $ tar -jxvf datasets1.tar.bz2 
 
 $ tar -jxvf datasets2.tar.bz2 
-
-$ ls -la datasets*
-
-datasets1:
--rwxr-xr-x@  1 mancilla  staff  87458816 Mar 14 21:44 book_tags.csv
-
--rw-r--r--@  1 mancilla  staff  11874761 Mar 12 22:52 restaurants.json
-
-datasets2:
-
--rwxr-xr-x@  1 mancilla  staff   2726679 Mar 13 20:58 books.csv
-
--rwxr-xr-x@  1 mancilla  staff  72126826 Sep 13  2017 ratings.csv
-
--rwxr-xr-x@  1 mancilla  staff    722480 Sep 13  2017 tags.csv
 
 
 ## Crear ambiente de MongoDB
