@@ -22,8 +22,11 @@ $ chmod +x *.sh
 
 $ ./0_create_directory.sh 
 
+### Replica Set
 $ ./1_start_replica.sh 
 
+### Single Node 
+$ ./1_start_standAlone.sh 
 
 ## Import datasets (into default test database)
 
