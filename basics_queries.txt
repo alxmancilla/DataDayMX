@@ -1,0 +1,53 @@
+>  db.books.findOne()
+
+{
+	"_id" : ObjectId("5aa890aa7fe2b08c22b6b246"),
+	"book_id" : 2,
+	"goodreads_book_id" : 3,
+	"best_book_id" : 3,
+	"work_id" : 4640799,
+	"books_count" : 491,
+	"isbn" : 439554934,
+	"isbn13" : 9780000000000,
+	"authors" : "J.K. Rowling, Mary GrandPr̩",
+	"original_publication_year" : 1997,
+	"original_title" : "Harry Potter and the Philosopher's Stone",
+	"title" : "Harry Potter and the Sorcerer's Stone (Harry Potter, #1)",
+	"language_code" : "eng",
+	"image_url" : "https://images.gr-assets.com/books/1474154022m/3.jpg",
+	"small_image_url" : "https://images.gr-assets.com/books/1474154022s/3.jpg"
+}
+
+
+>  db.books.count()
+10000
+
+>  db.books.distinct("book_id").length
+10000
+
+> db.books.distinct("authors").length
+4664
+
+> db.books.find().forEach(function(elem) { db.books.update({ _id: elem._id}, {$set: {"authors": elem.authors.split(", ")}}) } )
+
+> db.books.distinct("authors").length
+5841
+> db.ratings.findOne({"book_id": 1})
+{
+	"_id" : ObjectId("5aa889917fe2b08c225cd3eb"),
+	"user_id" : 2886,
+	"book_id" : 1,
+	"rating" : 5
+}
+
+Cantidad de ratings
+> db.ratings.count()
+5976479
+
+Cantidad de libros únicos en la colección “ratings”
+> db.ratings.distinct("book_id").length
+10000
+
+Cantidad de usuarios únicos en la colección “ratings”
+> db.ratings.distinct("user_id").length
+53424
