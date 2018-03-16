@@ -1,20 +1,20 @@
-# DataDayMX
+# Datasets and sample queries used during "Data Analysis with MongoDB" workshop in DataDay Mexico 2018 
 
 
-Descargar repositorio con dataset y ejemplos de análisis de datos con MongoDB
+Download repository with dataset and examples of data analysis with MongoDB
 
 $ git clone https://github.com/alxmancilla/DataDayMX.git
 
 $ cd DataDayMX
 
-## Descomprimir datasets
+## Untar and uncompress sample datasets
 
 $ tar -jxvf datasets1.tar.bz2 
 
 $ tar -jxvf datasets2.tar.bz2 
 
 
-## Crear ambiente de MongoDB
+## Create local replica set environment with MongoDB
 $ chmod +x *.sh
 
 $ ./0_create_directory.sh 
@@ -22,7 +22,7 @@ $ ./0_create_directory.sh
 $ ./1_start_replica.sh 
 
 
-## Importar datasets
+## Import datasets (into default test database)
 
 $ mongoimport -d test -c restaurants --drop --file ./datasets1/restaurants.json
 
@@ -35,10 +35,9 @@ $ mongoimport  -c ratings --drop --type csv --headerline --file ./datasets2/rati
 $ mongoimport  -c tags --drop --type csv --headerline --file ./datasets2/tags.csv 
 
 
-## Ingresar al shell de MongoDB
+## Enter MongoDB shell using test database 
 
 $ mongo test
-
 
 >  db.books.findOne()
 
@@ -70,7 +69,14 @@ $ mongo test
 4664
 
 
+## Simple queries with MongoDB  
 
+Execute queries on basic_queries.txt
 
+## Simple Find and Aggregate  with MongoDB  
+
+## Aggregate data with MongoDB  
+
+## Updating 'books' collections using aggregate queries with MongoDB  
 
 
