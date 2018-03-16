@@ -1,0 +1,59 @@
+Modifica la colección books con rating promedio y cantidad de ratings
+
+> db.ratings.aggregate([{$group: {_id: "$book_id", total: { $sum: 1}, promedio: {$avg: "$rating"}}}, {$sort: {"_id": 1}} ]).forEach(function(elem) { db.books.update({book_id: elem._id}, {$set: {"ratings_count": elem.total, "avg_rating": elem.promedio }}) } )
+
+Modifica la colección books tomando en cuenta los cálculos realizados
+
+> db.ratings.aggregate([{$group: {_id:{ book_id: "$book_id", rating: "$rating"}, total: {$sum: 1}  } }, {$sort: { "_id.book_id": 1, "_id.rating": 1}}, {$project: { _id: "$_id.book_id", rated: "$_id.rating", total: 1 }}, {$group: {_id: "$_id", ratings: {$push : {rated: "$rated", total: "$total"} }, total_ratings: {$sum: "$total"} }}, {$sort: {"id": 1}} ]).forEach(function(elem) { db.books.update({book_id: elem._id}, {$set: {"ratings": elem.ratings}}) } )
+
+Documento modificado en colección books
+
+> db.books.findOne()
+{
+	"_id" : ObjectId("5aa9f17134885bae077b6991"),
+	"book_id" : 1,
+	"goodreads_book_id" : 2767052,
+	"best_book_id" : 2767052,
+	"work_id" : 2792775,
+	"books_count" : 272,
+	"isbn" : 439023483,
+	"isbn13" : 9780000000000,
+	"authors" : [
+		"Suzanne Collins"
+	],
+	"original_publication_year" : 2008,
+	"original_title" : "The Hunger Games",
+	"title" : "The Hunger Games (The Hunger Games, #1)",
+	"language_code" : "eng",
+	"image" : {
+		"url" : "https://images.gr-assets.com/books/1447303603m/2767052.jpg",
+		"small_url" : "https://images.gr-assets.com/books/1447303603s/2767052.jpg"
+	},
+	"ratings" : [
+		{
+			"rated" : 1,
+			"total" : 231
+		},
+		{
+			"rated" : 2,
+			"total" : 636
+		},
+		{
+			"rated" : 3,
+			"total" : 3013
+		},
+		{
+			"rated" : 4,
+			"total" : 7569
+		},
+		{
+			"rated" : 5,
+			"total" : 11357
+		}
+	],
+	"avg_rating" : 4.2797070946242215,
+	"ratings_count" : 22806
+}
+
+
+
