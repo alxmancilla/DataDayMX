@@ -1,6 +1,6 @@
-# "Data Analysis with MongoDB" workshop 
+# DataDay Mexico 2018: MongoDB Workshop 
 
-Datasets and sample queries used during "Data Analysis with MongoDB" workshop in DataDay Mexico 2018 
+Datasets and queries used during "Data Analysis with MongoDB" workshop in DataDay Mexico 2018 
 
 ## Setup  environment
 
