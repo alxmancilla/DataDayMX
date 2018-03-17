@@ -1,32 +1,32 @@
-Filtrar y después agrupar por rating y contar total por nivel de rating
+# Aggregation pipeline. Filter ($match) and then group ($group) by rating field value and count ($sum) total of ratings by rating value
 > db.ratings.aggregate([{$match: {"book_id": 1}}, {$group: {_id: "$rating", total: {$sum:1}}}])
 { "_id" : 1, "total" : 231 }
 { "_id" : 3, "total" : 3013 }
 { "_id" : 4, "total" : 7569 }
 …
 
-Total de ratings por libro
+# Total number of ratings per book
 > db.ratings.aggregate([{$group: {_id: "$book_id", total: { $sum: 1}}} ])
 { "_id" : 9548, "total" : 61 }
 { "_id" : 8892, "total" : 88 }
 { "_id" : 9580, "total" : 71 }
 …
 
-Total de ratings por libro y su evaluación promedio
+# Total number of ratings and average rating per book 
 >  db.ratings.aggregate([{$group: {_id: "$book_id", total: { $sum: 1}, promedio: {$avg: "$rating"}}} ])
 { "_id" : 9548, "total" : 61, "promedio" : 4.131147540983607 }
 { "_id" : 8892, "total" : 88, "promedio" : 4.215909090909091 }
 { "_id" : 9580, "total" : 71, "promedio" : 4.267605633802817 }
 …
 
-Total de ratings por libro y su evaluación promedio, ordenados por book_id
+# Total number of ratings and average rating per book, sort by book_id
 > db.ratings.aggregate([{$group: {_id: "$book_id", total: { $sum: 1}, promedio: {$avg: "$rating"}}}, {$sort: {"_id": 1}} ])
 { "_id" : 1, "total" : 22806, "promedio" : 4.2797070946242215 }
 { "_id" : 2, "total" : 21850, "promedio" : 4.351350114416476 }
 { "_id" : 3, "total" : 16931, "promedio" : 3.214340558738409 }
 …
 
-Histograma  de libros ( mean, std dev, min, max )
+# Books' histogram  ( mean, std dev, min, max )
 > db.ratings.aggregate([{$group: {_id: "$book_id", 
                                                           total: { $sum: 1}}}, 
           {$group: {_id: null, total: {$sum: 1}, promedio: {$avg: "$total"}, 
@@ -36,73 +36,74 @@ Histograma  de libros ( mean, std dev, min, max )
 { "_id" : null, "total" : 10000, "promedio" : 597.6479, "des_est" : 1267.226422122578, "min" : 8, "max" : 22806 }
 
 
-Top ten books mejor calificados
-
-> db.ratings.aggregate([{$group: {_id: "$book_id", total: { $sum: 1}, promedio: {$avg: "$rating"}}}, {$sort: {promedio: -1}}, {$limit: 10} ])
-{ "_id" : 3628, "total" : 482, "promedio" : 4.829875518672199 }
-{ "_id" : 7947, "total" : 88, "promedio" : 4.818181818181818 }
-{ "_id" : 9566, "total" : 147, "promedio" : 4.7687074829931975 }
-…
-
-Top ten users que mas libros han calificado
-
-db.ratings.aggregate([{$group: {_id: "$user_id", total: { $sum: 1}, promedio: {$avg: "$rating"}}}, {$sort: {total: -1}}, {$limit: 10} ])
+# Top ten of users with most ratings  
+> db.ratings.aggregate([{$group: {_id: "$user_id", total: { $sum: 1}, promedio: {$avg: "$rating"}}}, {$sort: {total: -1}}, {$limit: 10} ])
 
 { "_id" : 12874, "total" : 200, "promedio" : 3.45 }
 { "_id" : 30944, "total" : 200, "promedio" : 4.21 }
 { "_id" : 12381, "total" : 199, "promedio" : 3.4271356783919598 }
 …
 
-Top ten de libros con un  join entre ratings y books para obtener detalles de cada libro
->  db.ratings.aggregate([{$group: {_id: "$book_id", total: { $sum: 1}, promedio: {$avg: "$rating"}}}, {$sort: {promedio: -1}}, {$limit: 10}, {$lookup: {from: "books", localField: "_id", foreignField: "book_id", as: "book_description"} } ]).pretty()
+# Top ten best rated books 
+> db.ratings.aggregate([{$group: {_id: "$book_id", total: { $sum: 1}, promedio: {$avg: "$rating"}}}, {$sort: {promedio: -1}}, {$limit: 10} ])
+{ "_id" : 3628, "total" : 482, "promedio" : 4.829875518672199 }
+{ "_id" : 7947, "total" : 88, "promedio" : 4.818181818181818 }
+{ "_id" : 9566, "total" : 147, "promedio" : 4.7687074829931975 }
+…
 
+# Top ten best rated books with book details (join with books collection using $lookup) 
+> db.ratings.aggregate([{$group: {_id: "$book_id", total: { $sum: 1}, promedio: {$avg: "$rating"}}}, {$sort: {promedio: -1}}, {$limit: 10}, {$lookup: {from: "books", localField: "_id", foreignField: "book_id", as: "book_description"} }, {$unwind: "$book_description"} ]).pretty()
 {
 	"_id" : 3628,
 	"total" : 482,
 	"promedio" : 4.829875518672199,
-	"book_description" : [
-		{
-			"_id" : ObjectId("5aa9f17234885bae077b77fe"),
-			"book_id" : 3628,
-			"goodreads_book_id" : 24812,
-			"best_book_id" : 24812,
-			"work_id" : 25599,
-			"books_count" : 14,
-			"isbn" : 740748475,
-			"isbn13" : 9780000000000,
-			"authors" : [
-				"Bill Watterson"
-			],
-			"original_publication_year" : 2005,
-			"original_title" : "The Complete Calvin and Hobbes",
-			"title" : "The Complete Calvin and Hobbes",
-			"language_code" : "eng",
-			"image" : {
-				"url" : "https://images.gr-assets.com/books/1473064526m/24812.jpg",
-				"small_url" : "https://images.gr-assets.com/books/1473064526s/24812.jpg"
-			}
-		}
-	]
+	"book_description" : {
+		"_id" : ObjectId("5aac66f2ff65d6854ab8a565"),
+		"book_id" : 3628,
+		"goodreads_book_id" : 24812,
+		"work_id" : 25599,
+		"books_count" : 14,
+		"isbn" : 740748475,
+		"isbn13" : 9780000000000,
+		"authors" : [
+			"Bill Watterson"
+		],
+		"original_publication_year" : 2005,
+		"original_title" : "The Complete Calvin and Hobbes",
+		"title" : "The Complete Calvin and Hobbes",
+		"language_code" : "eng",
+		"image_url" : "https://images.gr-assets.com/books/1473064526m/24812.jpg",
+		"small_image_url" : "https://images.gr-assets.com/books/1473064526s/24812.jpg"
+	}
 }
-…
+...
 
-db.ratings.aggregate([{$group: {_id: "$book_id", total: { $sum: 1}, promedio: {$avg: "$rating"}}}, {$sort: {promedio: -1}}, {$limit: 10}, {$lookup: {from: "books", localField: "_id", foreignField: "book_id", as: "book_description"} }, {$unwind: "$book_description"} ]).pretty()
+# Top ten best rated books with book details (join with books collection using $lookup), and projecting books fields title and publication year
 
+> db.ratings.aggregate([{$group: {_id: "$book_id", total: { $sum: 1}, promedio: {$avg: "$rating"}}}, 
+...                             {$sort: {promedio: -1}}, {$limit: 10}, 
+...                             {$lookup: {from: "books", localField: "_id", foreignField: "book_id", as: "book_description"} }, 
+...                             {$unwind: "$book_description"} , 
+...                     {$project: {total:1, promedio:1, title: "$book_description.title", publication_year: "$book_description.original_publication_year"}} ]).pretty()
+{
+	"_id" : 3628,
+	"total" : 482,
+	"promedio" : 4.829875518672199,
+	"title" : "The Complete Calvin and Hobbes",
+	"publication_year" : 2005
+}
+{
+	"_id" : 7947,
+	"total" : 88,
+	"promedio" : 4.818181818181818,
+	"title" : "ESV Study Bible",
+	"publication_year" : 2002
+}
+...
 
-db.ratings.aggregate([{$group: {_id: "$book_id", total: { $sum: 1}, promedio: {$avg: "$rating"}}}, 
-                            {$sort: {promedio: -1}}, {$limit: 10}, 
-                            {$lookup: {from: "books", localField: "_id", foreignField: "book_id", as: "book_description"} }, 
-                            {$unwind: "$book_description"} , 
-                    {$project: {total:1, promedio:1, title: "$book_description.title", publication_year: "$book_description.original_publication_year"}} ]).pretty()
+# Count total of ratings by rated value per book on ratings collection
 
-
-Total de votos por rankings asociados a cada book_id
-
-> db.ratings.aggregate([{$group: {_id:{ book_id: "$book_id", rating: "$rating"}, total: {$sum: 1}  } }, {$project: { _id: "$_id.book_id", rated: "$_id.rating", total: 1 }}, {$group: {_id: "$_id", ratings: {$push : {rated: "$rated", total: "$total"} }, total_ratings: {$sum: "$total"} }}, {$sort: {"id": 1}} ])
-{ "_id" : 248, "ratings" : [ { "rated" : 2, "total" : 308 }, { "rated" : 3, "total" : 1175 }, { "rated" : 1, "total" : 54 }, { "rated" : 5, "total" : 1577 }, { "rated" : 4, "total" : 1784 } ], "total_ratings" : 4898 }
-…
-
-> db.ratings.aggregate([{$group: {_id:{ book_id: "$book_id", rating: "$rating"}, total: {$sum: 1}  } }, {$sort: { "_id.book_id": 1, "_id.rating": 1}}, {$project: { _id: "$_id.book_id", rated: "$_id.rating", total: 1 }}, {$group: {_id: "$_id", ratings: {$push : {rated: "$rated", total: "$total"} }, total_ratings: {$sum: "$total"} }}, {$sort: {"id": 1}} ]).pretty()
+> db.ratings.aggregate([{$group: {_id:{ book_id: "$book_id", rating: "$rating"}, total: {$sum: 1}  } }, {$sort: { "_id.book_id": 1, "_id.rating": 1}}, {$project: { _id: "$_id.book_id", rated: "$_id.rating", total: 1 }}, {$group: {_id: "$_id", ratings: {$push : {rated: "$rated", total: "$total"} }, total_ratings: {$sum: "$total"} }} ]).pretty()
 {
 	"_id" : 10000,
 	"ratings" : [
@@ -129,4 +130,4 @@ Total de votos por rankings asociados a cada book_id
 	],
 	"total_ratings" : 111
 }
-
+...
