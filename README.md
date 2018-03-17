@@ -30,13 +30,15 @@ $ ./1_start_standAlone.sh
 
 ## Import datasets (into default test database)
 
-$ mongoimport -d test -c restaurants --drop --file ./datasets1/restaurants.json
+$ curl -O  https://raw.githubusercontent.com/mongodb/docs-assets/primer-dataset/primer-dataset.json
+
+$ mongoimport -d test -c restaurants --drop --file primer-dataset.json
 
 $ mongoimport  -c books --drop --type csv --headerline --file ./datasets2/books.csv 
 
-$ mongoimport  -c book_tags --drop --type csv --headerline ./datasets1/book_tags.csv 
-
 $ mongoimport  -c ratings --drop --type csv --headerline --file ./datasets2/ratings.csv 
+
+$ mongoimport  -c book_tags --drop --type csv --headerline ./datasets1/book_tags.csv 
 
 $ mongoimport  -c tags --drop --type csv --headerline --file ./datasets2/tags.csv 
 
