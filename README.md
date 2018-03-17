@@ -1,6 +1,8 @@
-# DataDay Mexico 2018: MongoDB Workshop 
+# Data Day Mexico 2018: MongoDB Workshop 
 
 Datasets and queries used during "Data Analysis with MongoDB" workshop in DataDay Mexico 2018 
+
+Data Day Web Site: https://sg.com.mx/dataday/
 
 ## Setup  environment
 
