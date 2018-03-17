@@ -12,9 +12,9 @@ $ cd DataDayMX
 
 ## Untar and uncompress sample datasets
 
-$ tar -jxvf datasets1.tar.bz2 
+$ tar -zxvf dataset_1.tgz 
 
-$ tar -jxvf datasets2.tar.bz2 
+$ tar -zxvf dataset_2.tgz 
 
 
 ## Create local replica set environment with MongoDB
@@ -34,14 +34,9 @@ $ curl -O  https://raw.githubusercontent.com/mongodb/docs-assets/primer-dataset/
 
 $ mongoimport -d test -c restaurants --drop --file primer-dataset.json
 
-$ mongoimport  -c books --drop --type csv --headerline --file ./datasets2/books.csv 
+$ mongoimport  -c books --drop --type csv --headerline --file ./dataset_1/books.csv 
 
-$ mongoimport  -c ratings --drop --type csv --headerline --file ./datasets2/ratings.csv 
-
-$ mongoimport  -c book_tags --drop --type csv --headerline ./datasets1/book_tags.csv 
-
-$ mongoimport  -c tags --drop --type csv --headerline --file ./datasets2/tags.csv 
-
+$ mongoimport  -c ratings --drop --type csv --headerline --file ./dataset_2/ratings.csv 
 
 ## Enter MongoDB shell using test database 
 
