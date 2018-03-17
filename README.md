@@ -8,35 +8,32 @@ Data Day Web Site: https://sg.com.mx/dataday/
 
 Download repository with dataset and examples of data analysis with MongoDB
 
-$ git clone https://github.com/alxmancilla/DataDayMX.git
+> $ git clone https://github.com/alxmancilla/DataDayMX.git
 
-$ cd DataDayMX
+> $ cd DataDayMX
 
 ## Untar / uncompress sample dataset
 
-$ tar -zxvf dataset.tgz 
+> $ tar -zxvf dataset.tgz 
 
 ## Create local MongoDB environment 
-$ chmod +x *.sh
+> $ chmod +x *.sh
 
-$ ./0_create_directory.sh 
+> $ ./0_create_directory.sh 
 
 ### Start a single node 
-$ ./1_start_standAlone.sh 
+> $ ./1_start_standAlone.sh 
 
 ### (or you can try ) Start a Replica Set
-$ ./1_start_replica.sh 
+> $ ./1_start_replica.sh 
 
 
 ## Import datasets (into default test database)
 
-$ curl -O  https://raw.githubusercontent.com/mongodb/docs-assets/primer-dataset/primer-dataset.json
-
-$ mongoimport -d test -c restaurants --drop --file primer-dataset.json
-
-$ mongoimport  -c books --drop --type csv --headerline --file ./dataset/books.csv 
-
-$ mongoimport  -c ratings --drop --type csv --headerline --file ./dataset/ratings.csv 
+> $ curl -O  https://raw.githubusercontent.com/mongodb/docs-assets/primer-dataset/primer-dataset.json
+> $ mongoimport -d test -c restaurants --drop --file primer-dataset.json
+> $ mongoimport  -c books --drop --type csv --headerline --file ./dataset/books.csv 
+> $ mongoimport  -c ratings --drop --type csv --headerline --file ./dataset/ratings.csv 
 
 ## Enter MongoDB shell using test database 
 
@@ -62,10 +59,10 @@ Execute updates available on update_books_with_aggregations.txt file
 
 Execute exit command on MongoDB shell
 
-> exit
+> > exit
 
 ## Remove local MongoDB environment 
 
-$ ./2_kill_all_and_clean.sh 
+> $ ./2_kill_all_and_clean.sh 
 
 
