@@ -58,7 +58,9 @@ Execute aggregations available on aggregate_queries.txt file
 
 Execute updates available on update_books_with_aggregations.txt file
 
-## To exit from MongoDB shell
+## Exiting from MongoDB shell
+
+Execute exit command on MongoDB shell
 
 > exit
 
