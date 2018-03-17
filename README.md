@@ -31,13 +31,16 @@ Download repository with dataset and examples of data analysis with MongoDB
 ## Import datasets (into default test database)
 
 > $ curl -O  https://raw.githubusercontent.com/mongodb/docs-assets/primer-dataset/primer-dataset.json
+
 > $ mongoimport -d test -c restaurants --drop --file primer-dataset.json
+
 > $ mongoimport  -c books --drop --type csv --headerline --file ./dataset/books.csv 
+
 > $ mongoimport  -c ratings --drop --type csv --headerline --file ./dataset/ratings.csv 
 
 ## Enter MongoDB shell using test database 
 
-$ mongo test
+> $ mongo test
 
 ## Simple queries with MongoDB  
 
@@ -59,7 +62,7 @@ Execute updates available on update_books_with_aggregations.txt file
 
 Execute exit command on MongoDB shell
 
-> > exit
+> exit
 
 ## Remove local MongoDB environment 
 
