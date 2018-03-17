@@ -10,18 +10,38 @@
 { "_id" : ObjectId("5aa889807fe2b08c225974ea"), "user_id" : 2, "book_id" : 9296, "rating" : 5 }
 …
 
-Mostrar resultados de colección ratings con book_id igual a 1
+# Filter ratings collection resutls where book_id equals 1 using find
 
-Filtrar ratings del book_id igual a 1  (find)
 > db.ratings.find({"book_id": 1})
 { "_id" : ObjectId("5aa889917fe2b08c225cd3eb"), "user_id" : 2886, "book_id" : 1, "rating" : 5 }
 { "_id" : ObjectId("5aa889977fe2b08c225dfbdc"), "user_id" : 6158, "book_id" : 1, "rating" : 5 }
 { "_id" : ObjectId("5aa889977fe2b08c225dfd25"), "user_id" : 3991, "book_id" : 1, "rating" : 4 }
 …
 
-Filtrar ratings del book_id igual a 1 (aggregate)
+# Filter ratings collection resutls where book_id equals 1 using aggregate ($match)
+
 > db.ratings.aggregate([{$match: {"book_id": 1}}])
 { "_id" : ObjectId("5aa889917fe2b08c225cd3eb"), "user_id" : 2886, "book_id" : 1, "rating" : 5 }
 { "_id" : ObjectId("5aa889977fe2b08c225dfbdc"), "user_id" : 6158, "book_id" : 1, "rating" : 5 }
 { "_id" : ObjectId("5aa889977fe2b08c225dfd25"), "user_id" : 3991, "book_id" : 1, "rating" : 4 }
 …
+
+# Create index on book_id field from books collection 
+> db.books.createIndex({book_id:1})
+{
+	"createdCollectionAutomatically" : false,
+	"numIndexesBefore" : 1,
+	"numIndexesAfter" : 2,
+	"ok" : 1
+}
+
+# Create index on book_id field from ratings collection 
+
+> db.ratings.createIndex({book_id:1})
+{
+	"createdCollectionAutomatically" : false,
+	"numIndexesBefore" : 1,
+	"numIndexesAfter" : 2,
+	"ok" : 1
+}
+
