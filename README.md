@@ -1,12 +1,10 @@
 # Data Day Mexico 2018: MongoDB Workshop 
 
-Datasets and queries used during "Data Analysis with MongoDB" workshop in DataDay Mexico 2018 
-
-Data Day Web Site: https://sg.com.mx/dataday/
+Datasets and queries used during "Data Analysis with MongoDB" workshop on Data Day Mexico 2018 ( https://sg.com.mx/dataday/ )
 
 ## Setup  environment
 
-Download repository with dataset and examples of data analysis with MongoDB
+Clone git repository with dataset and examples of data analysis with MongoDB
 
 > $ git clone https://github.com/alxmancilla/DataDayMX.git
 
