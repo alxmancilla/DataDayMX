@@ -5,21 +5,25 @@ mongod --replSet rs_pss \
        --logpath rs_pss/m0/mongod.log \
        --port 27017 \
        --bind_ip 127.0.0.1 \
-       --fork
+       --fork \
+       --wiredTigerCacheSizeGB 1
 
 mongod --replSet rs_pss \
        --dbpath rs_pss/m1 \
        --logpath rs_pss/m1/mongod.log \
        --port 27018 \
        --bind_ip 127.0.0.1 \
-       --fork
+       --fork \
+       --wiredTigerCacheSizeGB 1
+
 
 mongod --replSet rs_pss \
        --dbpath rs_pss/m2 \
        --logpath rs_pss/m2/mongod.log \
        --port 27019 \
        --bind_ip 127.0.0.1 \
-       --fork
+       --fork \
+       --wiredTigerCacheSizeGB 1
 
 sleep 1
 
