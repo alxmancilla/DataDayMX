@@ -16,7 +16,7 @@
 	"small_image_url" : "https://images.gr-assets.com/books/1447303603s/2767052.jpg"
 }
 
-> db.books.count()
+> db.books.countDocuments()
 10000
 
 > db.books.distinct("book_id").length
@@ -26,7 +26,7 @@
 4664
 
 # Change authors field structure (from a String to an array of Strings)
-> db.books.find().forEach(function(elem) { db.books.update({ _id: elem._id}, {$set: {"authors": elem.authors.split(", ")}}) } )
+> db.books.find().forEach(function(elem) { db.books.updateMany({ _id: elem._id}, {$set: {"authors": elem.authors.split(", ")}}) } )
 
 > db.books.distinct("authors").length
 5841
@@ -39,7 +39,7 @@
 	"rating" : 5
 }
 
-> db.ratings.count()
+> db.ratings.countDocuments()
 5976479
 
 >  db.books.distinct("book_id").length
@@ -48,7 +48,7 @@
 > db.books.distinct("authors").length
 4664
 
-> db.books.find().forEach(function(elem) { db.books.update({ _id: elem._id}, {$set: {"authors": elem.authors.split(", ")}}) } )
+> db.books.find().forEach(function(elem) { db.books.updateMany({ _id: elem._id}, {$set: {"authors": elem.authors.split(", ")}}) } )
 
 > db.books.distinct("authors").length
 5841
@@ -61,7 +61,7 @@
 }
 
 # Number of ratings
-> db.ratings.count()
+> db.ratings.countDocuments()
 5976479
 
 # Number of unique books on "ratings" collection
